@@ -50,18 +50,18 @@ if [ ! -f ~/.m2/repository/io/grpc/protoc-gen-grpc-java/1.15.1/protoc-gen-grpc-j
     popd
 fi
 
-mkdir -p ~/src/
-[ -d ~/src/hadoop ] || git clone http://github.com/apache/hadoop ~/src/hadoop
-cd ~/src/hadoop
-
 # NOTE: the tests of TestAuxServices need to create some file and directories which must not have group
 # and other permissions, and the files' parents direcotries(must not writable by group or other).
 # so we need change all the permissions of directories and the "umask" the umask will effect the new
 # created files and directories' permissions e.g. the 077 means the new created permissions: 777 - 077 = 700 (files: 666 - 077 = 600)
-chmod go-w ~/src -R
+sudo chmod go-w ~/ -R
 [[ "$(umask)" =~ "022" ]] || echo "umask 022" >> ~/.profile
 . ~/.profile
 umask
+
+mkdir -p ~/src/
+[ -d ~/src/hadoop ] || git clone http://github.com/apache/hadoop ~/src/hadoop
+cd ~/src/hadoop
 
 # Install manually compiled netty-all package
 wget -O netty-all-4.1.27-linux-aarch64.jar https://git.io/Je8K3
