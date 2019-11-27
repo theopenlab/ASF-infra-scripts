@@ -34,6 +34,11 @@ fi
 export PROTOBUF_HOME=/opt/protobuf-3.7.1
 export PATH="${PATH}:/opt/protobuf-3.7.1/bin"
 
+# phantomjs 2.1.1 require libicu55 which only in ubuntu xenial
+sudo echo "deb http://ports.ubuntu.com/ubuntu-ports xenial main" >> /etc/apt/sources.list
+sudo apt-get update
+sudo apt-get install -y libicu55
+
 if ! type phantomjs; then
     readonly phant_dir="$(mktemp -d --tmpdir phantomjs.XXXXXX)"
     wget -O - "https://github.com/liusheng/phantomjs/releases/download/2.1.1/phantomjs-2.1.1-linux-aarch64.tar.bz2" | sudo tar xj -C "$phant_dir"
